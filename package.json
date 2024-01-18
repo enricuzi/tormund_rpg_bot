@@ -1,0 +1,30 @@
+{
+  "name": "tormund_rpg_bot",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "repository": "https://github.com/enricuzi/tormund_rpg_bot.git",
+  "author": "Enrico Luzi <luzi.enrico@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "add": "^2.0.6",
+    "json-2-csv": "^5.0.1",
+    "node-telegram-bot-api": "^0.64.0",
+    "unique-names-generator": "^4.7.1",
+    "yarn": "^1.22.21"
+  },
+  "devDependencies": {
+    "@types/node-telegram-bot-api": "^0.64.2",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^43.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "*"
+  }
+}
