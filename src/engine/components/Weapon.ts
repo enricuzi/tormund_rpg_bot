@@ -26,7 +26,7 @@ export class Weapon implements Item {
         break
       case WeaponType.Staff:
         this.attackType = AttackType.Magical
-        this.value = 6
+        this.value = 7
         break
       default:
         this.attackType = AttackType.Physical

@@ -44,15 +44,17 @@ export const help: Command = async () => {
     Example:
     - ${CommandType.Replace} Tormund ${WeaponType.Sword} ${WeaponType.Bow}
   
-  ${CommandType.Attack} [nome] [oggetto] - Il personaggio attacca con l'oggetto
+  ${CommandType.Attack} [nome] - Il personaggio attacca con l'equipaggiamento attivo
     Example:
-    - ${CommandType.Attack} Tormund ${WeaponType.Sword}
+    - ${CommandType.Attack} Tormund
   
   ${CommandType.List} [nome]- Lista i nomi dei personaggi oppure printa i dettagli di un personaggio
     Example:
     - ${CommandType.List}
     - ${CommandType.List} Tormund
   
+  ${CommandType.Rules} - Mostra le regole di gioco del bot
+
   ${CommandType.Help} - Questo messaggio
   `, []]
 }

@@ -9,7 +9,7 @@ import {
   equip,
   help,
   list,
-  replace,
+  replace, rules,
   start,
   unequip
 } from '../commands'
@@ -57,6 +57,9 @@ export const message = (bot: TelegramBot) => async (msg: Message) => {
       case CommandType.Help:
         [message, buttons] = await help(args)
         break
+      case CommandType.Rules:
+        [message, buttons] = await rules(args)
+        break
       case CommandType.List:
         [message, buttons] = await list(args)
         break
@@ -69,6 +72,7 @@ export const message = (bot: TelegramBot) => async (msg: Message) => {
   }
 
   if (message) {
+    buttons = []
     await bot.sendMessage(id, message, {
       parse_mode: 'HTML',
       reply_markup: {
