@@ -9,6 +9,8 @@ import {
 export const replace: Command = async (args) => {
   const [characterName, item, newItem] = args
 
+  let message: string
+
   try {
     const character = context.getCharacter(characterName)
 
@@ -24,8 +26,10 @@ export const replace: Command = async (args) => {
 
     storeContext()
 
-    return character.print()
+    message = character.print()
   } catch (error) {
-    return throwError(error)
+    message = throwError(error)
   }
+
+  return [message, []]
 }

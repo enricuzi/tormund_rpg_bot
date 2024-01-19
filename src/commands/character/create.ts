@@ -22,6 +22,8 @@ export const create: Command = async (args) => {
   const mind = Math.max(Number(args[2]), MAX_ATTRIBUTE_VALUE) || random(MAX_ATTRIBUTE_VALUE)
   const life = Math.max(Number(args[3]), MAX_ATTRIBUTE_VALUE) || random(MAX_ATTRIBUTE_VALUE)
 
+  let message: string
+
   try {
     const character = new Character(name, {
       [AttributeType.Physic]: physic,
@@ -33,8 +35,10 @@ export const create: Command = async (args) => {
 
     storeContext()
 
-    return character.print()
+    message = character.print()
   } catch (error) {
-    return throwError(error)
+    message = throwError(error)
   }
+
+  return [message, []]
 }

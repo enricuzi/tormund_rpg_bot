@@ -1,4 +1,6 @@
-export type Command = (args: string[]) => Promise<string>
+import { InlineKeyboardButton } from 'node-telegram-bot-api'
+
+export type Command = (args: string[]) => Promise<[string, InlineKeyboardButton[]]>
 
 export enum CommandType {
   Start = '/inizia',
@@ -42,3 +44,9 @@ export enum ArmorType {
 }
 
 export type ItemType = WeaponType | ArmorType
+
+export type Item = {
+  readonly itemType: ItemType
+  readonly value: number
+  readonly bonus: number
+}

@@ -9,6 +9,8 @@ import {
 export const unequip: Command = async (args) => {
   const [characterName, item1, item2, item3] = args
 
+  let message: string
+
   try {
     const character = context.getCharacter(characterName)
 
@@ -27,8 +29,10 @@ export const unequip: Command = async (args) => {
 
     storeContext()
 
-    return character.print()
+    message = character.print()
   } catch (error) {
-    return throwError(error)
+    message = throwError(error)
   }
+
+  return [message, []]
 }

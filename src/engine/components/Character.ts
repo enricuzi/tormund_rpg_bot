@@ -5,7 +5,7 @@ import {
   AttributeType,
   ItemType,
   WeaponType
-} from '../types'
+} from '../../types'
 import { Weapon } from './Weapon'
 import { Armor } from './Armor'
 import { random } from '../utils'
@@ -17,7 +17,7 @@ export class Character {
 
   constructor (public readonly name: string, public attributes: AttributeMap, public equipment: ItemType[] = []) {
     equipment.forEach((item) => {
-      this._addItem(item)
+      this.addItem(item)
     })
   }
 
@@ -25,7 +25,7 @@ export class Character {
     return [this.weapon1.itemType, this.weapon2.itemType, this.armor.itemType].filter((item) => item !== WeaponType.None && item !== ArmorType.None).join(', ')
   }
 
-  public attack (itemType: ItemType = WeaponType.None): number {
+  public attack (itemType: ItemType = this.weapon1.itemType): number {
     let attack1 = 0
     let attribute = 0
 
@@ -56,7 +56,7 @@ export class Character {
   }
 
   public equip (itemType: ItemType): void {
-    this._addItem(itemType)
+    this.addItem(itemType)
   }
 
   public unequip (item: ItemType): void {
@@ -81,14 +81,13 @@ export class Character {
     `
   }
 
-  private _addItem (itemType: ItemType): void {
+  public addItem (itemType: ItemType): void {
     if (Object.values(WeaponType).includes(itemType as WeaponType)) {
-      if (this.weapon1.itemType === WeaponType.None) {
+      if (itemType === WeaponType.Bow || itemType === WeaponType.Staff) {
+        this.weapon1 = new Weapon(itemType)
+        this.weapon2 = new Weapon(WeaponType.None)
+      } else if (this.weapon1.itemType === WeaponType.None) {
         this.weapon1 = new Weapon(itemType as WeaponType)
-
-        if (itemType === WeaponType.Bow) {
-          this.weapon2 = new Weapon(WeaponType.None)
-        }
       } else if (this.weapon2.itemType === WeaponType.None) {
         this.weapon2 = new Weapon(itemType as WeaponType)
       }

@@ -4,10 +4,10 @@ import {
   Command,
   CommandType,
   WeaponType
-} from '../../engine'
+} from '../../types'
 
-export const help: Command = async (ctx) => {
-  return `Manuale dei comandi:
+export const help: Command = async () => {
+  return [`Manuale dei comandi:
   ${CommandType.Start} - Inizia il gioco
 
   ${CommandType.Create} [nome] [attributi]- Crea un nuovo personaggio
@@ -54,5 +54,5 @@ export const help: Command = async (ctx) => {
     - /list Tormund
   
   /guida - Questo messaggio
-  `
+  `, []]
 }
