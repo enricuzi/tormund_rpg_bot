@@ -5,13 +5,15 @@ import {
   uniqueNamesGenerator
 } from 'unique-names-generator'
 import {
+  ArmorType,
   AttributeType,
   Character,
   Command,
   context,
   random,
   storeContext,
-  throwError
+  throwError,
+  WeaponType
 } from '../../engine'
 
 const MAX_ATTRIBUTE_VALUE = 10
@@ -29,6 +31,10 @@ export const create: Command = async (args) => {
       [AttributeType.Physic]: physic,
       [AttributeType.Mind]: mind,
       [AttributeType.Life]: life
+    }, {
+      hand1: WeaponType.None,
+      hand2: WeaponType.None,
+      armor: ArmorType.None
     })
 
     context.addCharacter(character)

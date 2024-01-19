@@ -3,6 +3,7 @@ import {
   AttackType,
   AttributeMap,
   AttributeType,
+  Equipment,
   ItemType,
   WeaponType
 } from '../../types'
@@ -11,33 +12,33 @@ import { Armor } from './Armor'
 import { random } from '../utils'
 
 export class Character {
-  public weapon1: Weapon = new Weapon(WeaponType.None)
-  public weapon2: Weapon | Armor<ArmorType.Shield> = new Weapon(WeaponType.None)
-  public armor: Armor = new Armor(ArmorType.None)
+  public hand1: Weapon
+  public hand2: Weapon | Armor<ArmorType.Shield>
+  public armor: Armor
 
-  constructor (public readonly name: string, public attributes: AttributeMap, public equipment: ItemType[] = []) {
-    equipment.forEach((item) => {
-      this.addItem(item)
-    })
+  constructor (public readonly name: string, public attributes: AttributeMap, equipment: Equipment) {
+    this.hand1 = new Weapon(equipment.hand1)
+    this.hand2 = equipment.hand2 === ArmorType.Shield ? new Armor(equipment.hand2) : new Weapon(equipment.hand2)
+    this.armor = new Armor(equipment.armor)
   }
 
   public get items (): string {
-    return [this.weapon1.itemType, this.weapon2.itemType, this.armor.itemType].filter((item) => item !== WeaponType.None && item !== ArmorType.None).join(', ')
+    return [this.hand1.itemType, this.hand2.itemType, this.armor.itemType].filter((item) => item !== WeaponType.None && item !== ArmorType.None).join(', ')
   }
 
-  public attack (itemType: ItemType = this.weapon1.itemType): number {
+  public attack (itemType: ItemType = this.hand1.itemType): number {
     let attack1 = 0
     let attribute = 0
 
-    if (this.weapon1.itemType === itemType) {
-      attack1 = this.weapon1.attack
-      attribute = Math.floor(this._getRelatedAttribute(this.weapon1.attackType))
+    if (this.hand1.itemType === itemType) {
+      attack1 = this.hand1.attack
+      attribute = random(this._getRelatedAttribute(this.hand1.attackType))
     }
 
-    const attack2 = this.weapon2 instanceof Weapon
-      ? this.weapon2.itemType === WeaponType.None
+    const attack2 = this.hand2 instanceof Weapon
+      ? this.hand2.itemType === WeaponType.None
         ? Math.ceil(attack1 / 2)
-        : this.weapon2.itemType === itemType ? Math.floor(this.weapon2.attack / 2) : 0
+        : this.hand2.itemType === itemType ? Math.floor(this.hand2.attack / 2) : 0
       : 0
 
     console.log(attack1, attack2, attribute)
@@ -50,22 +51,37 @@ export class Character {
 
     const armor = this.armor.types.includes(type) ? random(attribute) : 0
 
-    const shield = this.weapon2 instanceof Armor && this.weapon2.types.includes(type) ? this.weapon2.defend : 0
+    const shield = this.hand2 instanceof Armor && this.hand2.types.includes(type) ? this.hand2.defend : 0
 
     return attribute + armor + shield
   }
 
   public equip (itemType: ItemType): void {
-    this.addItem(itemType)
+    if (Object.values(WeaponType).includes(itemType as WeaponType)) {
+      if (itemType === WeaponType.Bow || itemType === WeaponType.Staff) {
+        this.hand1 = new Weapon(itemType)
+        this.hand2 = new Weapon(WeaponType.None)
+      } else if (this.hand1.itemType === WeaponType.None) {
+        this.hand1 = new Weapon(itemType as WeaponType)
+      } else if (this.hand2.itemType === WeaponType.None) {
+        this.hand2 = new Weapon(itemType as WeaponType)
+      }
+    } else if (Object.values(ArmorType).includes(itemType as ArmorType)) {
+      if (this.hand2.itemType === WeaponType.None && itemType === ArmorType.Shield) {
+        this.hand2 = new Armor(itemType)
+      } else {
+        this.armor = new Armor(itemType as ArmorType)
+      }
+    }
   }
 
   public unequip (item: ItemType): void {
     if (this.armor.itemType === item) {
       this.armor = new Armor(ArmorType.None)
-    } else if (this.weapon2.itemType === item) {
-      this.weapon2 = new Weapon(WeaponType.None)
-    } else if (this.weapon1.itemType === item) {
-      this.weapon1 = new Weapon(WeaponType.None)
+    } else if (this.hand2.itemType === item) {
+      this.hand2 = new Weapon(WeaponType.None)
+    } else if (this.hand1.itemType === item) {
+      this.hand1 = new Weapon(WeaponType.None)
     } else {
       throw new Error('Non hai l\'oggetto da togliere')
     }
@@ -79,25 +95,6 @@ export class Character {
       ${AttributeType.Life}: ${this.attributes[AttributeType.Life]}
       Equipment: ${this.items}
     `
-  }
-
-  public addItem (itemType: ItemType): void {
-    if (Object.values(WeaponType).includes(itemType as WeaponType)) {
-      if (itemType === WeaponType.Bow || itemType === WeaponType.Staff) {
-        this.weapon1 = new Weapon(itemType)
-        this.weapon2 = new Weapon(WeaponType.None)
-      } else if (this.weapon1.itemType === WeaponType.None) {
-        this.weapon1 = new Weapon(itemType as WeaponType)
-      } else if (this.weapon2.itemType === WeaponType.None) {
-        this.weapon2 = new Weapon(itemType as WeaponType)
-      }
-    } else if (Object.values(ArmorType).includes(itemType as ArmorType)) {
-      if (this.weapon2.itemType === WeaponType.None && itemType === ArmorType.Shield) {
-        this.weapon2 = new Armor(itemType)
-      } else {
-        this.armor = new Armor(itemType as ArmorType)
-      }
-    }
   }
 
   private _getRelatedAttribute (type: AttackType) {

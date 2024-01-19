@@ -34,10 +34,10 @@ export const equip: Command = async (args) => {
 
       message = character.print()
       buttons = [
-        {
-          text: 'Metti',
-          callback_data: `${CommandType.Equip} ${characterName}`
-        },
+        // {
+        //   text: 'Metti',
+        //   callback_data: `${CommandType.Equip} ${characterName}`
+        // },
         {
           text: 'Attacca',
           callback_data: `${CommandType.Attack} ${characterName}`

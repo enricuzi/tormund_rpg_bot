@@ -13,22 +13,22 @@ export const list: Command = async (args) => {
 
       message = character.print()
       buttons = [
-        {
-          text: 'Metti',
-          callback_data: `${CommandType.Equip} ${characterName}`
-        },
+        // {
+        //   text: 'Metti',
+        //   callback_data: `${CommandType.Equip} ${characterName}`
+        // },
         {
           text: 'Attacca',
           callback_data: `${CommandType.Attack} ${characterName}`
-        },
-        {
-          text: 'Togli',
-          callback_data: `${CommandType.Unequip} ${characterName}`
-        },
-        {
-          text: 'Cambia',
-          callback_data: `${CommandType.Replace} ${characterName}`
         }
+        // {
+        //   text: 'Togli',
+        //   callback_data: `${CommandType.Unequip} ${characterName}`
+        // },
+        // {
+        //   text: 'Cambia',
+        //   callback_data: `${CommandType.Replace} ${characterName}`
+        // }
       ]
     } else {
       message = context.printCharacters()

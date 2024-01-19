@@ -10,7 +10,8 @@ export enum CommandType {
   Replace = '/cambia',
   Help = '/guida',
   List = '/lista',
-  Attack = '/attacca'
+  Attack = '/attacca',
+  Rules = '/regole'
 }
 
 export enum AttackType {
@@ -44,6 +45,12 @@ export enum ArmorType {
 }
 
 export type ItemType = WeaponType | ArmorType
+
+export type Equipment = {
+  hand1: WeaponType
+  hand2: WeaponType | ArmorType.Shield
+  armor: ArmorType
+}
 
 export type Item = {
   readonly itemType: ItemType
