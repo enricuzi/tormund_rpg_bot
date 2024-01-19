@@ -1,5 +1,5 @@
-import { AttackType, WeaponType } from './types'
-import { random } from '../commands/utils'
+import { AttackType, WeaponType } from '../types'
+import { random } from '../utils'
 import { Item } from './Item'
 
 export class Weapon implements Item {

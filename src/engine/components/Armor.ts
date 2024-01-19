@@ -1,4 +1,4 @@
-import { ArmorType, AttackType } from './types'
+import { ArmorType, AttackType } from '../types'
 import { Item } from './Item'
 
 export class Armor<ArmorTypeConstraints extends ArmorType = ArmorType> implements Item {

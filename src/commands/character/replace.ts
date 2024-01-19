@@ -1,7 +1,10 @@
-import { Command } from '../types'
-import { throwError } from '../utils'
-import { context } from '../../engine/Context'
-import { ItemType } from '../../engine/types'
+import {
+  Command,
+  context,
+  ItemType,
+  storeContext,
+  throwError
+} from '../../engine'
 
 export const replace: Command = async (args) => {
   const [characterName, item, newItem] = args
@@ -18,6 +21,8 @@ export const replace: Command = async (args) => {
 
     character.unequip(item as ItemType)
     character.equip(newItem as ItemType)
+
+    storeContext()
 
     return character.print()
   } catch (error) {

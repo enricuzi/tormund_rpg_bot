@@ -1,7 +1,10 @@
-import { Command } from '../types'
-import { ItemType } from '../../engine/types'
-import { context } from '../../engine/Context'
-import { throwError } from '../utils'
+import {
+  Command,
+  context,
+  ItemType,
+  storeContext,
+  throwError
+} from '../../engine'
 
 export const equip: Command = async (args) => {
   const [
@@ -24,6 +27,8 @@ export const equip: Command = async (args) => {
     if (item3) {
       character.equip(item3 as ItemType)
     }
+
+    storeContext()
 
     return character.print()
   } catch (error) {

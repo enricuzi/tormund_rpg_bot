@@ -1,7 +1,4 @@
-import { Command } from '../types'
-import { context } from '../../engine/Context'
-import { throwError } from '../utils'
-import { ItemType } from '../../engine/types'
+import { Command, context, ItemType, throwError } from '../../engine'
 
 export const attack: Command = async (args) => {
   const [characterName, itemType] = args

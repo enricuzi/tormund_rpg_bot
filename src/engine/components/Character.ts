@@ -5,10 +5,10 @@ import {
   AttributeType,
   ItemType,
   WeaponType
-} from './types'
+} from '../types'
 import { Weapon } from './Weapon'
 import { Armor } from './Armor'
-import { random } from '../commands/utils'
+import { random } from '../utils'
 
 export class Character {
   public weapon1: Weapon = new Weapon(WeaponType.None)
@@ -46,7 +46,7 @@ export class Character {
   }
 
   public defend (type: AttackType = AttackType.Magical): number {
-    const attribute = Math.floor((type === AttackType.Physical ? this.attributes.get(AttributeType.Physic) : this.attributes.get(AttributeType.Mind)) ?? 0)
+    const attribute = type === AttackType.Physical ? this.attributes[AttributeType.Physic] : this.attributes[AttributeType.Mind]
 
     const armor = this.armor.types.includes(type) ? random(attribute) : 0
 
@@ -74,9 +74,9 @@ export class Character {
   public print (): string {
     return `
       Name: ${this.name}
-      ${AttributeType.Physic}: ${this.attributes.get(AttributeType.Physic)}
-      ${AttributeType.Mind}: ${this.attributes.get(AttributeType.Mind)}
-      ${AttributeType.Life}: ${this.attributes.get(AttributeType.Life)}
+      ${AttributeType.Physic}: ${this.attributes[AttributeType.Physic]}
+      ${AttributeType.Mind}: ${this.attributes[AttributeType.Mind]}
+      ${AttributeType.Life}: ${this.attributes[AttributeType.Life]}
       Equipment: ${this.items}
     `
   }
@@ -102,6 +102,6 @@ export class Character {
   }
 
   private _getRelatedAttribute (type: AttackType) {
-    return (type === AttackType.Physical ? this.attributes.get(AttributeType.Physic) : this.attributes.get(AttributeType.Mind)) ?? 0
+    return type === AttackType.Physical ? this.attributes[AttributeType.Physic] : this.attributes[AttributeType.Mind]
   }
 }

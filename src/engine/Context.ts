@@ -1,30 +1,26 @@
-import { Character } from './Character'
+import { Character } from './components'
 
-class Context {
-  private readonly _characters: Character[]
-
-  constructor () {
-    this._characters = []
-  }
+export class Context {
+  public readonly characters: Character[] = []
 
   public addCharacter (character: Character) {
     if (this.hasCharacter(character.name)) throw new Error(`Character ${character.name} already exists`)
-    this._characters.push(character)
+    this.characters.push(character)
   }
 
   public getCharacter (name: string) {
     if (!name) throw new Error('Il nome del personaggio e\' obbligatorio')
-    const character = this._characters.find((c) => c.name === name)
+    const character = this.characters.find((c) => c.name === name)
     if (!character) throw new Error(`${name} non esiste`)
     return character
   }
 
   public hasCharacter (name: string) {
-    return this._characters.some((c) => c.name === name)
+    return this.characters.some((c) => c.name === name)
   }
 
   public printCharacters () {
-    return this._characters.map((character) => character.name).join('\n') || 'Nessun personaggio creato'
+    return this.characters.map((character) => character.name).join('\n') || 'Nessun personaggio creato'
   }
 }
 
