@@ -4,9 +4,8 @@ import { random } from '../utils'
 export class Weapon implements Item {
   public readonly attackType: AttackType
   public readonly value: number
-  public readonly bonus = 0
 
-  constructor (public readonly itemType: WeaponType) {
+  constructor (public readonly itemType: WeaponType, public readonly bonus = 0) {
     switch (this.itemType) {
       case WeaponType.Bow:
         this.attackType = AttackType.Physical

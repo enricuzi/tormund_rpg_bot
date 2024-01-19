@@ -18,7 +18,12 @@ export const unequip: Command = async (args) => {
       throw new Error('Il tipo di oggetto e\' obbligatorio')
     }
 
-    character.unequip(item1 as ItemType)
+    if (item1.includes('+')) {
+      const [item, bonus] = item1.split('+')
+      character.unequip(item as ItemType, Number(bonus))
+    } else {
+      character.unequip(item1 as ItemType)
+    }
 
     if (item2) {
       character.unequip(item2 as ItemType)

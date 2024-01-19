@@ -32,9 +32,9 @@ export const create: Command = async (args) => {
       [AttributeType.Mind]: mind,
       [AttributeType.Life]: life
     }, {
-      hand1: WeaponType.None,
-      hand2: WeaponType.None,
-      armor: ArmorType.None
+      hand1: { type: WeaponType.None },
+      hand2: { type: WeaponType.None },
+      armor: { type: ArmorType.None }
     })
 
     context.addCharacter(character)

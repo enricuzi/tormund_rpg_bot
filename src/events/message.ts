@@ -6,11 +6,14 @@ import { CommandType } from '../types'
 import {
   attack,
   create,
+  defend,
   equip,
   help,
   list,
-  replace, rules,
+  replace,
+  rules,
   start,
+  swap,
   unequip
 } from '../commands'
 
@@ -65,6 +68,12 @@ export const message = (bot: TelegramBot) => async (msg: Message) => {
         break
       case CommandType.Replace:
         [message, buttons] = await replace(args)
+        break
+      case CommandType.Swap:
+        [message, buttons] = await swap(args)
+        break
+      case CommandType.Defend:
+        [message, buttons] = await defend(args)
         break
     }
   } catch (error) {

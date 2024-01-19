@@ -1,6 +1,7 @@
 import {
   ArmorType,
-  Command, CommandType,
+  Command,
+  CommandType,
   context,
   ItemType,
   storeContext,
@@ -21,12 +22,23 @@ export const equip: Command = async (args) => {
     if (item1) {
       const character = context.getCharacter(characterName)
 
-      character.equip(item1 as ItemType)
+      if (item1.includes('+')) {
+        const [item, bonus] = item1.split('+')
+        character.equip(item as ItemType, Number(bonus))
+      } else {
+        character.equip(item1 as ItemType)
+      }
 
-      if (item2) {
+      if (item2 && item2.includes('+')) {
+        const [item, bonus] = item2.split('+')
+        character.equip(item as ItemType, Number(bonus))
+      } else {
         character.equip(item2 as ItemType)
       }
-      if (item3) {
+      if (item3 && item3.includes('+')) {
+        const [item, bonus] = item3.split('+')
+        character.equip(item as ItemType, Number(bonus))
+      } else {
         character.equip(item3 as ItemType)
       }
 

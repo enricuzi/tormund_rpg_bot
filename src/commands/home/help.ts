@@ -44,9 +44,17 @@ export const help: Command = async () => {
     Example:
     - ${CommandType.Replace} Tormund ${WeaponType.Sword} ${WeaponType.Bow}
   
+  ${CommandType.Swap} [nome] - Inverte gli oggetti nelle mani del personaggio. Lo scudo non puo' essere invertito
+    Example:
+    - ${CommandType.Swap} Tormund
+  
   ${CommandType.Attack} [nome] - Il personaggio attacca con l'equipaggiamento attivo
     Example:
     - ${CommandType.Attack} Tormund
+  
+  ${CommandType.Defend} [nome] - Il personaggio difende con l'equipaggiamento attivo
+    Example:
+    - ${CommandType.Defend} Tormund
   
   ${CommandType.List} [nome]- Lista i nomi dei personaggi oppure printa i dettagli di un personaggio
     Example:

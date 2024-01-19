@@ -32,9 +32,18 @@ export const readContext = () => {
 
     data.characters.forEach(rawCharacter => {
       const character = new Character(rawCharacter.name, rawCharacter.attributes, {
-        hand1: rawCharacter.hand1.itemType,
-        hand2: rawCharacter.hand2.itemType,
-        armor: rawCharacter.armor.itemType
+        hand1: {
+          type: rawCharacter.hand1.itemType,
+          bonus: rawCharacter.hand1.bonus
+        },
+        hand2: {
+          type: rawCharacter.hand2.itemType,
+          bonus: rawCharacter.hand2.bonus
+        },
+        armor: {
+          type: rawCharacter.armor.itemType,
+          bonus: rawCharacter.armor.bonus
+        }
       })
       context.addCharacter(character)
     })
