@@ -34,6 +34,6 @@ export class Weapon implements Item {
   }
 
   public get attack (): number {
-    return Math.floor(random(this.value) + this.bonus)
+    return Math.floor(random(this.value, 0) + this.bonus)
   }
 }

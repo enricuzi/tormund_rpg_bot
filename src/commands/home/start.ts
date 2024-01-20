@@ -7,7 +7,7 @@ export const start: Command = async (chatId) => {
     chatManager.loadContext(chatId)
   }
 
-  return ['Iniziamo a tormundare!', [
+  return ['Context laoaded', [
     { text: 'Lista', callback_data: CommandType.List },
     { text: 'Manuale', callback_data: CommandType.Help },
     { text: 'Regole', callback_data: CommandType.Rules }

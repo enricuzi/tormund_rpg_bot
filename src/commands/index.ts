@@ -1,6 +1,7 @@
 export * from './character/attack'
 export * from './character/create'
 export * from './character/defend'
+export * from './character/describe'
 export * from './character/equip'
 export * from './character/list'
 export * from './character/level'

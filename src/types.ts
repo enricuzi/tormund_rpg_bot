@@ -14,7 +14,8 @@ export enum CommandType {
   Attack = '/attacca',
   Rules = '/regole',
   Swap = '/inverti',
-  Defend = '/difendi'
+  Defend = '/difendi',
+  Describe = '/descrivi'
 }
 
 export enum AttackType {

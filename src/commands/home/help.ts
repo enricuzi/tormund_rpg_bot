@@ -64,10 +64,15 @@ export const help: Command = async () => {
     - ${CommandType.Level} Tormund fisico 12
     - ${CommandType.Level} Tormund fisico +3
   
-  ${CommandType.List} [nome]- Lista i nomi dei personaggi oppure printa i dettagli di un personaggio
+  ${CommandType.List} [nome] - Lista i nomi dei personaggi oppure printa i dettagli di un personaggio
     Example:
     - ${CommandType.List}
     - ${CommandType.List} Tormund
+  
+  ${CommandType.Describe} [nome] [testo]- Aggiungi un contenuto testuale al personaggio o mostra il testo
+    Example:
+    - ${CommandType.List} Tormund
+    - ${CommandType.List} Tormund qui si fa sul serio!
   
   ${CommandType.Rules} - Mostra le regole di gioco del bot
 

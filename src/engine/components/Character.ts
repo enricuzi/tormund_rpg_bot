@@ -13,11 +13,27 @@ import { Armor } from './Armor'
 import { random } from '../utils'
 
 export class Character {
+  public readonly name: string
+  public readonly attributes: AttributeMap
+  public readonly traits: Record<string, any>
+
   public hand1: Weapon
   public hand2: Weapon | Armor<ArmorType.Shield>
   public armor: Armor
+  public description: string
 
-  constructor (public readonly name: string, public attributes: AttributeMap, equipment: Equipment) {
+  constructor ({ attributes, description, equipment, name, traits }: {
+    attributes: AttributeMap
+    description?: string
+    equipment: Equipment
+    name: string
+    traits?: Record<string, any>
+  }) {
+    this.name = name
+    this.attributes = attributes
+    this.description = description ?? ''
+    this.traits = traits ?? {}
+
     this.hand1 = new Weapon(equipment.hand1.type, equipment.hand1.bonus)
     this.hand2 = equipment.hand2.type === ArmorType.Shield
       ? new Armor(equipment.hand2.type, equipment.hand2.bonus)
@@ -27,7 +43,7 @@ export class Character {
 
   public get attack (): number {
     const attack1 = this.hand1.attack
-    const attribute = this._getRelatedAttribute(this.hand1.attackType)
+    const attribute = this.getRelatedAttribute(this.hand1.attackType)
 
     let attack2
 
@@ -38,16 +54,16 @@ export class Character {
     } else if (this.hand2.itemType === this.hand1.itemType) {
       attack2 = Math.floor(this.hand2.attack / 2) + random(attribute)
     } else {
-      attack2 = this.hand2.attack + random(this._getRelatedAttribute(this.hand2.attackType))
+      attack2 = this.hand2.attack + random(this.getRelatedAttribute(this.hand2.attackType))
     }
 
     console.log(attack1, attack2, attribute)
 
-    return attack1 + attack2 + random(attribute)
+    return this.criticCheck(attack1 + attack2 + random(attribute))
   }
 
   public defend (attackType: AttackType = AttackType.Physical): number {
-    const attribute = this._getRelatedAttribute(attackType)
+    const attribute = this.getRelatedAttribute(attackType)
 
     const armor = this.armor.itemType === ArmorType.None
       ? 0
@@ -133,7 +149,18 @@ export class Character {
     return bonus ? `${itemType}+${bonus}` : itemType
   }
 
-  private _getRelatedAttribute (type: AttackType) {
+  private getRelatedAttribute (type: AttackType) {
     return type === AttackType.Physical ? this.attributes[AttributeType.Physic] : this.attributes[AttributeType.Mind]
+  }
+
+  private criticCheck (value: number, successMultiplier = 2, failureMultiplier = successMultiplier) {
+    const roll = random(20)
+    if (roll === 20) {
+      return value * successMultiplier
+    }
+    if (roll === 1) {
+      return Math.floor(value / failureMultiplier)
+    }
+    return value
   }
 }

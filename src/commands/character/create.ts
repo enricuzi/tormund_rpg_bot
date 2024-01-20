@@ -22,14 +22,18 @@ export const create: Command = async (chatId, args) => {
   let message: string
 
   try {
-    const character = new Character(name, {
-      [AttributeType.Physic]: physic,
-      [AttributeType.Mind]: mind,
-      [AttributeType.Life]: life
-    }, {
-      hand1: { type: WeaponType.None },
-      hand2: { type: WeaponType.None },
-      armor: { type: ArmorType.None }
+    const character = new Character({
+      name,
+      equipment: {
+        hand1: { type: WeaponType.None },
+        hand2: { type: WeaponType.None },
+        armor: { type: ArmorType.None }
+      },
+      attributes: {
+        [AttributeType.Physic]: physic,
+        [AttributeType.Mind]: mind,
+        [AttributeType.Life]: life
+      }
     })
 
     const context = chatManager.getContext(chatId)

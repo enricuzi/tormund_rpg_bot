@@ -7,6 +7,7 @@ import {
   attack,
   create,
   defend,
+  describe,
   equip,
   help,
   level,
@@ -78,6 +79,9 @@ export const message = (bot: TelegramBot) => async (msg: Message) => {
         break
       case CommandType.Defend:
         [message, buttons] = await defend(chatId, args)
+        break
+      case CommandType.Describe:
+        [message, buttons] = await describe(chatId, args)
         break
     }
   } catch (error) {

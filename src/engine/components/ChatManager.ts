@@ -35,24 +35,29 @@ class ChatManager {
       const context = new Context()
 
       data.characters.forEach(rawCharacter => {
-        const character = new Character(rawCharacter.name, rawCharacter.attributes, {
-          hand1: {
-            type: rawCharacter.hand1.itemType,
-            bonus: rawCharacter.hand1.bonus
+        const character = new Character({
+          name: rawCharacter.name,
+          attributes: rawCharacter.attributes,
+          equipment: {
+            hand1: {
+              type: rawCharacter.hand1.itemType,
+              bonus: rawCharacter.hand1.bonus
+            },
+            hand2: {
+              type: rawCharacter.hand2.itemType,
+              bonus: rawCharacter.hand2.bonus
+            },
+            armor: {
+              type: rawCharacter.armor.itemType,
+              bonus: rawCharacter.armor.bonus
+            }
           },
-          hand2: {
-            type: rawCharacter.hand2.itemType,
-            bonus: rawCharacter.hand2.bonus
-          },
-          armor: {
-            type: rawCharacter.armor.itemType,
-            bonus: rawCharacter.armor.bonus
-          }
+          description: rawCharacter.description
         })
         context.addCharacter(character)
       })
 
-      console.log('Reading context from storage', context)
+      console.log('Reading description from storage', context)
 
       this.setContext(chatId, context)
     } catch (err) {

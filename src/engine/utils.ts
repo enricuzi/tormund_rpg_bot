@@ -1,1 +1,1 @@
-export const random = (max = 20) => Math.floor(Math.random() * max) + 1
+export const random = (max = 20, base = 1) => Math.floor(Math.random() * max) + base
