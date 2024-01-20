@@ -5,20 +5,15 @@ import {
   uniqueNamesGenerator
 } from 'unique-names-generator'
 import {
-  ArmorType,
-  AttributeType,
   Character,
-  Command,
-  context,
-  random,
-  storeContext,
-  throwError,
-  WeaponType
+  chatManager,
+  random
 } from '../../engine'
+import { ArmorType, AttributeType, Command, WeaponType } from '../../types'
 
 const MAX_ATTRIBUTE_VALUE = 10
 
-export const create: Command = async (args) => {
+export const create: Command = async (chatId, args) => {
   const name = args[0] || uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals] })
   const physic = Math.max(Number(args[1]), MAX_ATTRIBUTE_VALUE) || random(MAX_ATTRIBUTE_VALUE)
   const mind = Math.max(Number(args[2]), MAX_ATTRIBUTE_VALUE) || random(MAX_ATTRIBUTE_VALUE)
@@ -37,13 +32,13 @@ export const create: Command = async (args) => {
       armor: { type: ArmorType.None }
     })
 
+    const context = chatManager.getContext(chatId)
     context.addCharacter(character)
-
-    storeContext()
+    chatManager.storeContext(chatId, context)
 
     message = character.print()
   } catch (error) {
-    message = throwError(error)
+    message = chatManager.getErrorMessage(error)
   }
 
   return [message, []]

@@ -26,12 +26,10 @@ export class Character {
   }
 
   public get attack (): number {
-    let attack1 = 0
-    let attack2 = 0
-    let attribute = 0
+    const attack1 = this.hand1.attack
+    const attribute = this._getRelatedAttribute(this.hand1.attackType)
 
-    attack1 = this.hand1.attack
-    attribute = this._getRelatedAttribute(this.hand1.attackType)
+    let attack2
 
     if (this.hand2.itemType === WeaponType.None) {
       attack2 = Math.ceil(attack1 / 2)

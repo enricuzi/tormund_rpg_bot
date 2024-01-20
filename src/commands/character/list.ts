@@ -1,13 +1,15 @@
-import { Command, CommandType, context, throwError } from '../../engine'
 import { InlineKeyboardButton } from 'node-telegram-bot-api'
+import { Command, CommandType } from '../../types'
+import { chatManager } from '../../engine'
 
-export const list: Command = async (args) => {
+export const list: Command = async (chatId, args) => {
   const [characterName] = args
 
   let message: string
   let buttons: InlineKeyboardButton[] = []
 
   try {
+    const context = chatManager.getContext(chatId)
     if (characterName) {
       const character = context.getCharacter(characterName)
 
@@ -34,7 +36,7 @@ export const list: Command = async (args) => {
       message = context.printCharacters()
     }
   } catch (error) {
-    message = throwError(error)
+    message = chatManager.getErrorMessage(error)
   }
 
   return [message, buttons]

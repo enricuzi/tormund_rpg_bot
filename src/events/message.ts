@@ -18,11 +18,11 @@ import {
 } from '../commands'
 
 export const message = (bot: TelegramBot) => async (msg: Message) => {
-  const { id } = msg.chat
+  const { id: chatId } = msg.chat
   const { text } = msg
 
   // Process the incoming message here
-  console.log(id, text)
+  console.log(chatId, text)
 
   if (!text || !text.startsWith('/') || text === '/') {
     return
@@ -43,37 +43,37 @@ export const message = (bot: TelegramBot) => async (msg: Message) => {
   try {
     switch (command) {
       case CommandType.Start:
-        [message, buttons] = await start(args)
+        [message, buttons] = await start(chatId, args)
         break
       case CommandType.Create:
-        [message, buttons] = await create(args)
+        [message, buttons] = await create(chatId, args)
         break
       case CommandType.Equip:
-        [message, buttons] = await equip(args)
+        [message, buttons] = await equip(chatId, args)
         break
       case CommandType.Unequip:
-        [message, buttons] = await unequip(args)
+        [message, buttons] = await unequip(chatId, args)
         break
       case CommandType.Attack:
-        [message, buttons] = await attack(args)
+        [message, buttons] = await attack(chatId, args)
         break
       case CommandType.Help:
-        [message, buttons] = await help(args)
+        [message, buttons] = await help(chatId, args)
         break
       case CommandType.Rules:
-        [message, buttons] = await rules(args)
+        [message, buttons] = await rules(chatId, args)
         break
       case CommandType.List:
-        [message, buttons] = await list(args)
+        [message, buttons] = await list(chatId, args)
         break
       case CommandType.Replace:
-        [message, buttons] = await replace(args)
+        [message, buttons] = await replace(chatId, args)
         break
       case CommandType.Swap:
-        [message, buttons] = await swap(args)
+        [message, buttons] = await swap(chatId, args)
         break
       case CommandType.Defend:
-        [message, buttons] = await defend(args)
+        [message, buttons] = await defend(chatId, args)
         break
     }
   } catch (error) {
@@ -82,7 +82,7 @@ export const message = (bot: TelegramBot) => async (msg: Message) => {
 
   if (message) {
     buttons = []
-    await bot.sendMessage(id, message, {
+    await bot.sendMessage(chatId, message, {
       parse_mode: 'HTML',
       reply_markup: {
         inline_keyboard: [buttons]

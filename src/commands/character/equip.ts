@@ -1,24 +1,24 @@
+import { InlineKeyboardButton } from 'node-telegram-bot-api'
 import {
   ArmorType,
   Command,
   CommandType,
-  context,
   ItemType,
-  storeContext,
-  throwError, WeaponType
-} from '../../engine'
-import { InlineKeyboardButton } from 'node-telegram-bot-api'
+  WeaponType
+} from '../../types'
+import { chatManager } from '../../engine'
 
-export const equip: Command = async (args) => {
+export const equip: Command = async (chatId, args) => {
   const [
     characterName,
     item1, item2, item3
   ] = args
 
-  let message = ''
+  let message
   let buttons: InlineKeyboardButton[] = []
 
   try {
+    const context = chatManager.getContext(chatId)
     if (item1) {
       const character = context.getCharacter(characterName)
 
@@ -42,7 +42,7 @@ export const equip: Command = async (args) => {
         character.equip(item3 as ItemType)
       }
 
-      storeContext()
+      chatManager.storeContext(chatId, context)
 
       message = character.print()
       buttons = [
@@ -66,7 +66,7 @@ export const equip: Command = async (args) => {
       })))
     }
   } catch (error) {
-    message = throwError(error)
+    message = chatManager.getErrorMessage(error)
   }
 
   return [message, buttons]

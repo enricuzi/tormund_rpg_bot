@@ -1,8 +1,10 @@
-import { Command, CommandType, context, readContext } from '../../engine'
+import { Command, CommandType } from '../../types'
+import { chatManager } from '../../engine'
 
-export const start: Command = async () => {
+export const start: Command = async (chatId) => {
+  const context = chatManager.getContext(chatId)
   if (!context.characters.length) {
-    readContext()
+    chatManager.loadContext(chatId)
   }
 
   return ['Iniziamo a tormundare!', [

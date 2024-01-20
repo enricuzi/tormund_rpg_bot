@@ -2,13 +2,14 @@ import TelegramBot, {
   CallbackQuery,
   InlineKeyboardButton
 } from 'node-telegram-bot-api'
-import { CommandType, throwError } from '../engine'
 import { attack, equip, help, list } from '../commands'
+import { CommandType } from '../types'
+import { chatManager } from '../engine'
 
 export const query = (bot: TelegramBot) => async (query: CallbackQuery) => {
   console.log('Reacting to button event', query)
 
-  const { data: text, from: { id: charId } } = query
+  const { data: text, from: { id: chatId } } = query
 
   if (!text) {
     return
@@ -29,24 +30,24 @@ export const query = (bot: TelegramBot) => async (query: CallbackQuery) => {
   try {
     switch (command) {
       case CommandType.List:
-        [message, buttons] = await list(args)
+        [message, buttons] = await list(chatId, args)
         break
       case CommandType.Help:
-        [message, buttons] = await help(args)
+        [message, buttons] = await help(chatId, args)
         break
       case CommandType.Equip:
-        [message, buttons] = await equip(args)
+        [message, buttons] = await equip(chatId, args)
         break
       case CommandType.Attack:
-        [message, buttons] = await attack(args)
+        [message, buttons] = await attack(chatId, args)
         break
     }
   } catch (error) {
-    message = throwError(error)
+    message = chatManager.getErrorMessage(error)
   }
 
   if (message) {
-    await bot.sendMessage(charId, message, {
+    await bot.sendMessage(chatId, message, {
       parse_mode: 'HTML',
       reply_markup: {
         inline_keyboard: [buttons]

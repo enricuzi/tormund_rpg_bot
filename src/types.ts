@@ -1,6 +1,6 @@
 import { InlineKeyboardButton } from 'node-telegram-bot-api'
 
-export type Command = (args: string[]) => Promise<[string, InlineKeyboardButton[]]>
+export type Command = (chatId: number, args: string[]) => Promise<[string, InlineKeyboardButton[]]>
 
 export enum CommandType {
   Start = '/inizia',
@@ -9,7 +9,7 @@ export enum CommandType {
   Unequip = '/togli',
   Replace = '/cambia',
   Help = '/guida',
-  List = '/lista',
+  List = '/mostra',
   Attack = '/attacca',
   Rules = '/regole',
   Swap = '/inverti',

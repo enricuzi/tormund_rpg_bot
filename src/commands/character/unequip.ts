@@ -1,17 +1,13 @@
-import {
-  Command,
-  context,
-  ItemType,
-  storeContext,
-  throwError
-} from '../../engine'
+import { Command, ItemType } from '../../types'
+import { chatManager } from '../../engine'
 
-export const unequip: Command = async (args) => {
+export const unequip: Command = async (chatId, args) => {
   const [characterName, item1, item2, item3] = args
 
   let message: string
 
   try {
+    const context = chatManager.getContext(chatId)
     const character = context.getCharacter(characterName)
 
     if (!item1) {
@@ -32,11 +28,11 @@ export const unequip: Command = async (args) => {
       character.unequip(item3 as ItemType)
     }
 
-    storeContext()
+    chatManager.storeContext(chatId, context)
 
     message = character.print()
   } catch (error) {
-    message = throwError(error)
+    message = chatManager.getErrorMessage(error)
   }
 
   return [message, []]

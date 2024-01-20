@@ -1,4 +1,4 @@
-import { Character } from './components'
+import { Character } from './index'
 
 export class Context {
   public readonly characters: Character[] = []
@@ -23,5 +23,3 @@ export class Context {
     return this.characters.map((character) => character.name).join('\n') || 'Nessun personaggio creato'
   }
 }
-
-export const context = new Context()
