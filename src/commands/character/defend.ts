@@ -18,8 +18,13 @@ export const defend: Command = async (chatId, args) => {
     message = `${characterName} defende su ${attackType || AttackType.Physical} con ${value}`
 
     if (Number(monsterAttack) > value) {
-      character.attributes[AttributeType.Life] -= Number(monsterAttack) - value
-      message += `\n${characterName} subisce ${Number(monsterAttack) - value} danni`
+      const damage = Number(monsterAttack) - value
+      character.attributes[AttributeType.Life] -= damage
+      message += `\n${characterName} subisce ${damage} danni`
+
+      if (character.attributes[AttributeType.Life] <= 0) {
+        message += '\n\nOH NO!! SEI MORTO!!'
+      }
     }
   } catch (error) {
     message = chatManager.getErrorMessage(error)
