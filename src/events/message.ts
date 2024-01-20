@@ -9,6 +9,7 @@ import {
   defend,
   equip,
   help,
+  level,
   list,
   replace,
   rules,
@@ -62,6 +63,9 @@ export const message = (bot: TelegramBot) => async (msg: Message) => {
         break
       case CommandType.Rules:
         [message, buttons] = await rules(chatId, args)
+        break
+      case CommandType.Level:
+        [message, buttons] = await level(chatId, args)
         break
       case CommandType.List:
         [message, buttons] = await list(chatId, args)

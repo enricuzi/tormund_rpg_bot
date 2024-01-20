@@ -52,9 +52,17 @@ export const help: Command = async () => {
     Example:
     - ${CommandType.Attack} Tormund
   
-  ${CommandType.Defend} [nome] - Il personaggio difende con l'equipaggiamento attivo
+  ${CommandType.Defend} [nome] [attacco del mostro] [tipo di attacco] - Il personaggio difende con l'equipaggiamento attivo rispetto ai danni ricevuti e sul tipo di attacco.
+  Il tipo di attacco di default e' "fisico"
     Example:
     - ${CommandType.Defend} Tormund
+    - ${CommandType.Defend} Tormund 12
+    - ${CommandType.Defend} Tormund 12 mente
+  
+  ${CommandType.Level} [nome] [attributo] [valore] - Setta un attributo o ne aggiunge una quantita' per un personaggio
+    Example:
+    - ${CommandType.Level} Tormund fisico 12
+    - ${CommandType.Level} Tormund fisico +3
   
   ${CommandType.List} [nome]- Lista i nomi dei personaggi oppure printa i dettagli di un personaggio
     Example:

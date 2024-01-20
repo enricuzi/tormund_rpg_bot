@@ -106,6 +106,14 @@ export class Character {
     this.hand2 = temp
   }
 
+  public level (attributeType: AttributeType, newValue: string) {
+    if (newValue.startsWith('+')) {
+      this.attributes[attributeType] += Number(newValue.padStart(1))
+    } else {
+      this.attributes[attributeType] = Number(newValue)
+    }
+  }
+
   public print (): string {
     return `
       Name: ${this.name}

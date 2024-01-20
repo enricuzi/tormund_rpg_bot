@@ -10,10 +10,11 @@ export enum CommandType {
   Replace = '/cambia',
   Help = '/guida',
   List = '/mostra',
+  Level = '/livello',
   Attack = '/attacca',
   Rules = '/regole',
   Swap = '/inverti',
-  Defend = '/difende'
+  Defend = '/difendi'
 }
 
 export enum AttackType {
