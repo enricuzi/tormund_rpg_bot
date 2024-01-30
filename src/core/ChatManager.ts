@@ -4,11 +4,11 @@ import { Context } from './Context'
 class ChatManager {
   public readonly chats: Record<number, Context> = {}
 
-  public setContext(chatId: number, context: Context) {
+  public setContext (chatId: number, context: Context) {
     this.chats[chatId] = context
   }
 
-  public getContext(chatId: number) {
+  public getContext (chatId: number) {
     if (!this.chats[chatId]) {
       this.chats[chatId] = new Context()
     }
@@ -16,32 +16,32 @@ class ChatManager {
     return this.chats[chatId]
   }
 
-  public storeContext(chatId: number, context: Context) {
-    const data = JSON.stringify(context)
+  public storeContext (contextName: string, contextData: unknown) {
+    const data = JSON.stringify(contextData)
 
     try {
-      fs.writeFileSync(`${chatId}.txt`, data, 'utf8')
-      console.log('Context stored')
+      fs.writeFileSync(`${contextName}.txt`, data, 'utf8')
+      console.log(`Context ${contextName} stored`)
     } catch (error) {
       console.error(error)
     }
   }
 
-  public loadContext(chatId: number) {
+  public loadContext<Context>(contextName: string, catchErrors = false) {
     try {
-      const data: Context = JSON.parse(fs.readFileSync(`${chatId}.txt`, 'utf8'))
+      const data: Context = JSON.parse(fs.readFileSync(`${contextName}.txt`, 'utf8'))
 
-      const context = new Context()
+      console.log(`Context ${contextName} loaded from storage`)
 
-      console.log('Reading description from storage', context)
-
-      this.setContext(chatId, context)
+      return data
     } catch (err) {
-      console.error(err)
+      if (catchErrors) {
+        console.error(err)
+      }
     }
   }
 
-  public getErrorMessage(error: unknown) {
+  public getErrorMessage (error: unknown) {
     return (error as Error).message
   }
 }
