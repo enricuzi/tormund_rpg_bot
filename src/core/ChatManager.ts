@@ -1,15 +1,14 @@
 import fs from 'fs'
-import { Character } from '../core'
 import { Context } from './Context'
 
 class ChatManager {
   public readonly chats: Record<number, Context> = {}
 
-  public setContext (chatId: number, context: Context) {
+  public setContext(chatId: number, context: Context) {
     this.chats[chatId] = context
   }
 
-  public getContext (chatId: number) {
+  public getContext(chatId: number) {
     if (!this.chats[chatId]) {
       this.chats[chatId] = new Context()
     }
@@ -17,7 +16,7 @@ class ChatManager {
     return this.chats[chatId]
   }
 
-  public storeContext (chatId: number, context: Context) {
+  public storeContext(chatId: number, context: Context) {
     const data = JSON.stringify(context)
 
     try {
@@ -28,7 +27,7 @@ class ChatManager {
     }
   }
 
-  public loadContext (chatId: number) {
+  public loadContext(chatId: number) {
     try {
       const data: Context = JSON.parse(fs.readFileSync(`${chatId}.txt`, 'utf8'))
 
@@ -42,7 +41,7 @@ class ChatManager {
     }
   }
 
-  public getErrorMessage (error: unknown) {
+  public getErrorMessage(error: unknown) {
     return (error as Error).message
   }
 }

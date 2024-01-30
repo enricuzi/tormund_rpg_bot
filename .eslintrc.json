@@ -28,6 +28,8 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unsafe-argumen": "off",
     "@typescript-eslint/require-array-sort-compare": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/naming-convention": "off",
     "accessor-pairs": "off",
     "no-return-assign": "off",
     "no-case-declarations": "off"

@@ -10,7 +10,7 @@ import {
 } from '../../types'
 import { Weapon } from './Weapon'
 import { Armor } from './Armor'
-import { random } from '../utils'
+import { random } from '../../../src/core/utils'
 
 export class Character {
   public readonly name: string

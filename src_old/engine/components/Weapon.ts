@@ -1,5 +1,5 @@
 import { AttackType, Item, WeaponType } from '../../types'
-import { random } from '../utils'
+import { random } from '../../../src/core/utils'
 
 export class Weapon implements Item {
   public readonly attackType: AttackType

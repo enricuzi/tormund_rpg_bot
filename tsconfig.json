@@ -8,7 +8,7 @@
     "skipLibCheck": true
   },
   "include": [
-    "old_src"
+    "src"
   ],
   "exclude": ["node_modules"]
 }
