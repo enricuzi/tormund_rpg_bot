@@ -11,7 +11,7 @@ type WeaponDescription = {
 const weaponMap: WeaponDescription[] = []
 
 const init = async () => {
-  let weapons = chatManager.loadContext<WeaponDescription[]>('weapons')
+  let weapons = chatManager.loadContext<WeaponDescription[]>('armi')
   if (!weapons) {
     console.log('Fetching tutte le armi')
     weapons = []
@@ -61,7 +61,7 @@ export const weapons: Command = async (chatId, args) => {
     }).join('\n')
   }
 
-  const weapon = weaponMap.find(weapon => weapon.name === weaponName)
+  const weapon = weaponMap.find(weapon => weapon.name.toLowerCase() === weaponName.trim().toLowerCase())
   if (!weapon) {
     return `Arma ${weaponName} non trovata`
   }

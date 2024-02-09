@@ -8,7 +8,7 @@ const bot = new TelegramBot(TOKEN, { polling: true })
 
 export enum CommandName {
   Load = '/carica',
-  Spells = '/magia',
+  Spells = '/magie',
   Weapons = '/armi'
 }
 
