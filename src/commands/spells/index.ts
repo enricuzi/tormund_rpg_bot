@@ -69,8 +69,8 @@ const init = async () => {
             details: `
           - <b>Scuola</b>: ${school.trim()}
           - <b>Azione</b>: ${action.trim()}
-          - <b>Salvezza</b>: ${save.trim()}
-          - <b>Concentrazione</b>: ${concentration.trim()}
+          - <b>Salvezza</b>: ${save.trim() || '-'}
+          - <b>Concentrazione</b>: ${concentration.trim() || '-'}
           - ><b>Descrizione</b>: ${description?.trim()}
           `.replace(/\s+/g, ' ').replace(/\s-/g, '\n-')
           })
