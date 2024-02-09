@@ -29,7 +29,7 @@ class ChatManager {
 
   public loadContext<Context>(contextName: string, catchErrors = false) {
     try {
-      const data: Context = JSON.parse(fs.readFileSync(`${contextName}.txt`, 'utf8'))
+      const data: Context = JSON.parse(fs.readFileSync(`store/${contextName}.txt`, 'utf8'))
 
       console.log(`Context ${contextName} loaded from storage`)
 

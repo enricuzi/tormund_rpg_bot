@@ -4,7 +4,8 @@ import { chatManager } from '../../core/ChatManager'
 
 type SpellDescription = { name: string, level: number, details: string }
 
-const spellMap = new Map<ClassName, SpellDescription[]>()
+const allSpells: SpellDescription[] = []
+const classSpellsMap = new Map<ClassName, SpellDescription[]>()
 
 const BASE_URL = 'https://dungeonsanddragons.fandom.com/it/wiki'
 
@@ -45,7 +46,7 @@ const init = async () => {
   ]
 
   for (const { className, url } of BASE_URLs) {
-    let spells = chatManager.loadContext<SpellDescription[]>(`store/incantesimi_${className}`)
+    let spells = chatManager.loadContext<SpellDescription[]>(`incantesimi_${className}`)
     if (!spells) {
       console.log(`Fetching gli incantesimi da ${className}`)
 
@@ -78,8 +79,14 @@ const init = async () => {
         chatManager.storeContext(`store/incantesimi_${className}`, spells)
       }
     }
+    spells.forEach(spell => {
+      if (!allSpells.find(allSpell => allSpell.name === spell.name)) {
+        allSpells.push(spell)
+      }
+    })
+
+    classSpellsMap.set(className, spells)
     console.log(`Incantesimi da ${className} caricati`)
-    spellMap.set(className, spells)
   }
 }
 
@@ -91,8 +98,8 @@ init().then(() => {
 
 // /magia mago 3
 export const spells: Command = async (chatId, args) => {
-  const [className, ...filter] = args
-  if (!className) {
+  const [name, ...filter] = args
+  if (!name) {
     return 'Manca la classe'
   }
 
@@ -100,31 +107,37 @@ export const spells: Command = async (chatId, args) => {
     filter[0] = '0'
   }
 
-  const spells = spellMap.get(className as ClassName)
+  let spell: SpellDescription | undefined
 
-  if (!spells) {
-    return `Classe ${className} non trovata`
+  const spells = classSpellsMap.get(name as ClassName)
+
+  if (spells) {
+    if (!isNaN(Number(filter[0]))) {
+      return `${
+        spells
+          .filter(spell => spell.level === Number(filter[0]))
+          .map(spell => `- ${spell.name}, ${spell.level}`)
+          .join('\n')
+      }`
+    }
+
+    const spellName = filter.join(' ').toLowerCase()
+
+    spell = spells.find(spell => spell.name.toLowerCase() === spellName)
+
+    if (!spell) {
+      return `Magia ${filter} non trovata`
+    }
+  } else {
+    const spellName = args.join(' ').toLowerCase()
+    spell = allSpells.find(spell => spell.name.toLowerCase() === spellName)
+
+    if (!spell) {
+      return 'Magia non trovata'
+    }
   }
 
-  if (!isNaN(Number(filter[0]))) {
-    return `${
-      spells
-        .filter(spell => spell.level === Number(filter[0]))
-        .map(spell => `- ${spell.name}, ${spell.level}`)
-        .join('\n')
-    }`
-  }
-
-  const spellName = filter.join('_').toLowerCase()
-
-  const spell = spells.find(spell => spell.name.toLowerCase().replace(/\s/g, '_') === spellName)
-
-  if (!spell) {
-    return `Magia ${filter} non trovata`
-  }
-
-  return `
-    <b>${spell.name}</b> (${spell.level})
-    <i>${spell.details}</i>
-  `
+  return `<b>${spell.name}</b> (${spell.level})
+<i>${spell.details}</i>
+`
 }
